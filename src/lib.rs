@@ -72,3 +72,7 @@ pub fn get_device_type(navigator_string: String) -> String {
     }
     return DeviceType::Desktop.to_string();
 }
+
+pub fn new() {
+    utils::set_panic_hook();
+}
