@@ -1,9 +1,9 @@
+#[path = "constants/regexConstants.rs"]
+mod imported_constants;
 mod utils;
 
-// use regex::Regex;
-use std::string::ToString;
+use regex::Regex;
 use wasm_bindgen::prelude::*;
-
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
 #[cfg(feature = "wee_alloc")]
@@ -42,17 +42,33 @@ pub enum DeviceType {
 }
 
 #[wasm_bindgen]
-pub fn get_device_type(navigator_string: String) -> Result<String, String> {
-    // let mobile_regex =
-    //     Regex::new("/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i").unwrap();
-    // let tablet_regex = Regex::new("/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i").unwrap();
-    dbg!(navigator_string);
-
-    // if mobile_regex.is_match(navigator_string.as_str()) {
-    //     return Ok(DeviceType::Mobile.to_string());
-    // }
-    // if tablet_regex.is_match(navigator_string.as_str()) {
-    //     return Ok(DeviceType::Tablet.to_string());
-    // }
-    return Ok(DeviceType::Desktop.to_string());
+/// Returns user device type
+///
+/// # Arguments
+///
+/// * `navigator_string` - Current user navigator string ´navigator.userAgent´
+///
+/// # Examples
+///
+/// ```
+/// // Usage
+/// get_device_type(navigator.userAgent)
+///
+/// // Returns
+/// "Mobile" | "Tablet" | "Desktop"
+/// ```
+pub fn get_device_type(navigator_string: String) -> String {
+    if Regex::new(imported_constants::constants::MOBILE_REGEX)
+        .unwrap()
+        .is_match(navigator_string.as_str())
+    {
+        return DeviceType::Mobile.to_string();
+    }
+    if Regex::new(imported_constants::constants::TABLET_REGEX)
+        .unwrap()
+        .is_match(navigator_string.as_str())
+    {
+        return DeviceType::Tablet.to_string();
+    }
+    return DeviceType::Desktop.to_string();
 }
