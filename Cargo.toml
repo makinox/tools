@@ -1,9 +1,9 @@
 [package]
 name = "tools"
-version = "0.1.0"
+version = "2.0.0"
 authors = ["Jesus Bossa <x@jesusbossa.dev>"]
-edition = "2018"
-description = "A tool package"
+edition = "2021"
+description = "A little utils library."
 repository = "https://github.com/makinox/tools"
 license = "MIT"
 
